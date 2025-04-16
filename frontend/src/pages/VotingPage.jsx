@@ -4,7 +4,10 @@ import axios from "axios";
 import io from "socket.io-client";
 
 const apiUrl = import.meta.env.VITE_API_URL;
-const socket = io(apiUrl);
+const socket = io(apiUrl, {
+  withCredentials: true,
+  transports: ["websocket", "polling"],
+});
 
 const VotingPage = () => {
   const { pollId } = useParams();
