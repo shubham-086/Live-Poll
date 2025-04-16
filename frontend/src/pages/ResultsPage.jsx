@@ -5,7 +5,10 @@ import io from "socket.io-client";
 import ChartComponent from "../components/ChartComponent";
 
 const apiUrl = import.meta.env.VITE_API_URL;
-const socket = io(apiUrl);
+const socket = io("https://live-poll-weld.vercel.app", {
+  withCredentials: true,
+  transports: ["websocket", "polling"],
+});
 
 const ResultsPage = () => {
   const { pollId } = useParams();

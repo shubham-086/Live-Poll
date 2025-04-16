@@ -7,12 +7,32 @@ require("dotenv").config();
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server, {
-  cors: { origin: "*", credentials: true },
+
+app.use(
+  cors({
+    origin: [process.env.CLIENT_URL, "http://localhost:3000"],
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://live-poll-six.vercel.app");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
 });
 
-app.use(cors());
-app.use(express.json());
+const io = socketIo(server, {
+  cors: {
+    origin: [process.env.CLIENT_URL, "http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+  transports: ["websocket", "polling"],
+});
+
 app.get("/", (req, res) => {
   res.send("Server is Healthy.");
 });
