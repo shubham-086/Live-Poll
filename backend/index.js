@@ -8,7 +8,7 @@ require("dotenv").config();
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
-  cors: { origin: process.env.CLIENT_URL, credentials: true },
+  cors: { origin: "*", credentials: true },
 });
 
 app.use(cors());
