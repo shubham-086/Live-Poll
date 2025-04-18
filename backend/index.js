@@ -14,6 +14,7 @@ const io = socketIo(server, {
     credentials: true,
   },
   transports: ["websocket", "polling"],
+  allowEIO4: true,
 });
 
 app.use(cors());
